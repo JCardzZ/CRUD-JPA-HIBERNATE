@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
+import com.google.gson.Gson;
+import com.mm.dao.ProductoDao;
 import com.mm.model.TblProducto;
 import com.mysql.fabric.Response;
 
@@ -34,35 +36,22 @@ public class ServletController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-
-		String action = request.getParameter("btn");
-		EntityManager em;
-		EntityManagerFactory emf;
-
-		emf = Persistence.createEntityManagerFactory("CRUD-JPA-HIBERNATE");
-		em = emf.createEntityManager();
-
 		TblProducto pr = new TblProducto();
+		ProductoDao prd = new ProductoDao();
+
+		String id = null;
+		String nombreProducto = null;
+		String precioProducto = null;
+		String cantidadProducto = null;
+		String totalProducto = null;
 
 		try {
 
-			String id = request.getParameter("Id");
-			String nombreProducto = request.getParameter("Nproductos");
-			String precioProducto = request.getParameter("Pproductos");
-			String cantidadProducto = request.getParameter("Cproductos");
-			String totalProducto = request.getParameter("Tproductos");
+			id = request.getParameter("Id");
+			nombreProducto = request.getParameter("Nproductos");
+			precioProducto = request.getParameter("Pproductos");
+			cantidadProducto = request.getParameter("Cproductos");
+			totalProducto = request.getParameter("Tproductos");
 
 			pr.setId(Integer.parseInt(id));
 			pr.setNombreProducto(nombreProducto);
@@ -74,29 +63,57 @@ public class ServletController extends HttpServlet {
 
 		}
 
-		if (action.equals("agregar")) {
+		String action = request.getParameter("btn");
 
-			em.getTransaction().begin();
-			em.persist(pr);
-			em.flush();
-			em.getTransaction().commit();
+		if (action.equals("Guardar")) {
 
-		} else if (action.equals("eliminar")) {
+			pr.setId(Integer.parseInt(id));
+			pr.setNombreProducto(nombreProducto);
+			pr.setPrecioProducto(Double.parseDouble(precioProducto));
+			pr.setCantidadProducto(Integer.parseInt(cantidadProducto));
+			pr.setTotalProducto(Double.parseDouble(totalProducto));
 
-			pr = em.getReference(TblProducto.class, pr.getId());
-			em.getTransaction().begin();
-			em.remove(pr);
-			em.getTransaction().commit();
+			prd.agregarDatos(pr);
 
-		} else if (action.equals("modificar")) {
+		} else if (action.equals("Actualizar")) {
 
-			em.getTransaction().begin();
-			em.merge(pr);
-			em.flush();
-			em.getTransaction().commit();
-			
+			pr.setId(Integer.parseInt(id));
+			pr.setNombreProducto(nombreProducto);
+			pr.setPrecioProducto(Double.parseDouble(precioProducto));
+			pr.setCantidadProducto(Integer.parseInt(cantidadProducto));
+			pr.setTotalProducto(Double.parseDouble(totalProducto));
+
+			prd.actualizarDatos(pr);
+
+		} else if (action.equals("Eliminar")) {
+			try {
+				pr.setId(Integer.parseInt(id));
+				prd.eliminarDatos(pr);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
 		}
+
 		response.sendRedirect("index.jsp");
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ProductoDao prdao = new ProductoDao();
+
+		Gson json = new Gson();
+
+		try {
+			response.getWriter().append(json.toJson(prdao.productosLista()));
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 }

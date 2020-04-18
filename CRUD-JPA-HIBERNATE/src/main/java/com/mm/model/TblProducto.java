@@ -16,15 +16,15 @@ public class TblProducto implements Serializable {
 
 	@Id
 	private int id;
+	
+	@Column(name="nombre_producto")
+	private String nombreProducto;
+	
+	@Column(name="precio_producto")
+	private double precioProducto;
 
 	@Column(name="cantidad_producto")
 	private int cantidadProducto;
-
-	@Column(name="nombre_producto")
-	private String nombreProducto;
-
-	@Column(name="precio_producto")
-	private double precioProducto;
 
 	@Column(name="total_producto")
 	private double totalProducto;
