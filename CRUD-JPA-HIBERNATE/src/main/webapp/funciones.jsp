@@ -55,5 +55,24 @@
 			name="btn">
 
 	</form>
+	
+		<script type="text/javascript">
+		
+	 var caja2 = document.getElementById('cantidadPr');
+
+	 caja2.addEventListener('keyup', function(){
+
+	 	var valordato1 = document.getElementById('precioPr').value;
+	 	var valordato2 = document.getElementById('cantidadPr').value;
+	 	var operacion =  Number (valordato1) * Number(valordato2);
+
+	 	document.getElementById('totalPr').value = operacion;
+
+	 	
+
+	 	console.log(operacion);
+
+	 });
+	 </script>
 </body>
 </html>

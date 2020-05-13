@@ -4,6 +4,11 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function () {
+	
+		setInterval( 
+				function(){
+					
+				
 		
 			var btn = $('#carga').val();
 			$.post('ServletController', {
@@ -11,10 +16,13 @@
 			}, function (response) {
 				
 				let datos = JSON.parse(response);
-				console.log(datos);
+				//console.log(datos);
 				
 				var tablaDatos = document.getElementById('tablaDatos');
+				tablaDatos.innerHTML="";
+				
 				for (let item of datos) {
+					
 					tablaDatos.innerHTML += `
 					<tr>
 					<td>${item.id}</>
@@ -34,6 +42,8 @@
 			
 
 		});
+			
+				},2000);
 
 	});
 
