@@ -25,6 +25,7 @@
 					<td>
 					<a href="ServletController?btn=Eliminar&Id=${item.id}" class="btn btn-warning">Eliminar</a>
 					<a href="funciones.jsp?idBus=${item.id}&nombrePr=${item.nombreProducto}&precioPr=${item.precioProducto}&cantidadPr=${item.cantidadProducto}&totalPr=${item.totalProducto}" class="btn btn-danger">Actualizar</a>
+					<a href="ServletController?btn=AgregarVenta&Id=${item.id}" class="btn btn-warning">Agregar Venta</a>
 					</td>
 					</tr>
 

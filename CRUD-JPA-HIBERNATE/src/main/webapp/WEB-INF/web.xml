@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.mm.controller.ServletController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletHistorialUsuario</servlet-name>
+  	<display-name>ServletHistorialUsuario</display-name>
+  	<description></description>
+  	<servlet-class>com.mm.controller.ServletHistorialUsuario</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>servlet</servlet-name>
   	<url-pattern>/servlet</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>ServletController</servlet-name>
   	<url-pattern>/ServletController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletHistorialUsuario</servlet-name>
+  	<url-pattern>/ServletHistorialUsuario</url-pattern>
   </servlet-mapping>
 </web-app>

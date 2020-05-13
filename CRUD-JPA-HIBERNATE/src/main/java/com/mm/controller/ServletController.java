@@ -13,7 +13,9 @@ import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import com.google.gson.Gson;
 import com.mm.dao.ProductoDao;
+import com.mm.dao.VentaDao;
 import com.mm.model.TblProducto;
+import com.mm.model.Venta;
 import com.mysql.fabric.Response;
 
 /**
@@ -36,6 +38,7 @@ public class ServletController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		TblProducto pr = new TblProducto();
 		ProductoDao prd = new ProductoDao();
 
@@ -85,7 +88,24 @@ public class ServletController extends HttpServlet {
 
 			prd.actualizarDatos(pr);
 
-		} else if (action.equals("Eliminar")) {
+		} else if(action.equals("AgregarVenta")) {
+			
+			Venta tbv = new Venta();
+			VentaDao vdao = new VentaDao();
+			TblProducto prn = new TblProducto();
+			
+		//	tbv.setId(Integer.parseInt(id));
+			 prn.setId(Integer.parseInt(id));
+			 tbv.setTblProducto(prn);
+
+
+			vdao.agregarDatosVenta(tbv);
+
+		}
+		
+		
+		
+		else if (action.equals("Eliminar")) {
 			try {
 				pr.setId(Integer.parseInt(id));
 				prd.eliminarDatos(pr);
